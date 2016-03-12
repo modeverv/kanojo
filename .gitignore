@@ -1,3 +1,5 @@
 *_flymake*
 *~
 config.yml
+*.log
+pid.txt

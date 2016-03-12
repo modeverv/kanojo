@@ -1,7 +1,7 @@
 # twitter
-api_key:"hoge"
-api_secret:"hoge"
-access_token:"hoge"
-access_token_secret:"hoge"
+api_key: hoge
+api_secret: hoge
+access_token: hoge
+access_token_secret: hoge
 #docomo  
-docomo_api_key:"hoge"
+docomo_api_key: hoge

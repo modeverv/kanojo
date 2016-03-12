@@ -1,4 +1,3 @@
-# coding:utf-8
 require 'yaml'
 require 'twitter'
 require 'tweetstream'
@@ -34,19 +33,25 @@ class Eve
   end
 
   # 引数を投稿するメソッド
-  def say(words, id)
-    puts words
+  def say words, id
+    p words
     @client.update(words, :in_reply_to_status_id => id)
   end
 
+  def array_say array, to, id
+    array.each{|line|
+      say to + line, id
+    }
+  end
+
   # 会話を生成する(docomoru)
-  def docomoru_create_dialogue(str)
+  def docomoru_create_dialogue str
     response = @docomoru.create_dialogue(str)
     return response.body["utt"]
   end
 
   # QandA(docomoru)
-  def docomoru_create_knowledge(str)
+  def docomoru_create_knowledge str
     response = @docomoru.create_knowledge(str)
     if(response.body["code"]=="E020010")
       return response.body["message"]["textForDisplay"]

@@ -1,5 +1,5 @@
-# coding: utf-8
 require './eve.rb'
+require './notify.rb'
 
 # デーモン化
 Process.daemon(true, true)
@@ -8,6 +8,9 @@ open("pid.txt", 'w') {|f| f << Process.pid}
 # eveの初期化
 eve = Eve.new
 
+# システムリソースの取得系
+notify = Notify.new
+
 kanojo = "@bot_yome"
 ore = "@lovesaemi"
 
@@ -15,6 +18,7 @@ ore = "@lovesaemi"
 begin
   eve.timeline.userstream{|status|
     contents = status.text
+
     next if(contents=~/^RT/)
     
     id = status.user.screen_name
@@ -29,8 +33,13 @@ begin
     
     # reply_answer
     if contents =~ /#{kanojo}/
-      puts :reply_answer
       postmatch = $'.gsub(/\s|[　]|\?|\？/, "").strip
+
+      if postmatch.strip =~ /^com/
+        notify.execute(postmatch.strip,eve,id,status.id)
+        next
+      end
+      
       # QandA
       if(postmatch =~ /誰|何処|だれ|どこ|何時|いつ|どうやって|どうして|何故|なぜ|どの|何|なに|どれ|は$/)
         eve.say(id + eve.docomoru_create_knowledge(postmatch), status.id)
@@ -38,6 +47,7 @@ begin
       else
         eve.say(id + eve.docomoru_create_dialogue(postmatch), status.id)
       end
+      
       next
     end
 

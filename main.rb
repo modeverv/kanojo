@@ -37,7 +37,7 @@ begin
     end
 
     #つぶやいたらリプライ
-    if(id==旦那)
+    if(id==ore)
       if contents =~ /愛|好/ && contents =~ /#{yome}/
         rep_lap=["私も愛してるよ","大好きだよ。"]
      

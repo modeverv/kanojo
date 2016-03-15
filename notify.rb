@@ -25,6 +25,8 @@ class Notify
                 disk
               when @command =~ /anime/
                 anime
+              when @command =~ /help/
+                help
               else
                 cantdo
               end
@@ -53,8 +55,16 @@ SQL
   end
 
   def cantdo
-    result = "処理不能でしたよー"
-    @eve.say(@id + result,@status_id)
+    help
+  end
+
+  def help
+    result =<<~EOF
+     com:anime tweet latest recorded animes.
+     com:disk show usage of disk.
+     com:help show help.
+    EOF
+    @eve.say(@id + result,@status_id)    
   end
 
 end

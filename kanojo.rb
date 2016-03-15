@@ -1,3 +1,4 @@
+# coding: utf-8
 require './eve.rb'
 require './notify.rb'
 
@@ -54,8 +55,12 @@ begin
     #つぶやいたらリプライ
     if id =~ /#{ore}/
       puts :ぶやいたらリプライ
-      rep_lap = ["仕事しんさい","Twitterやめんさい"]
-      eve.say(id + rep_lap.sample, status.id)        
+      if contents  =~ /w\:/
+        messages = ["がんばれー","ほどほどにねー"]
+      else
+        messages = ["仕事しんさい","Twitterやめんさい"]
+      end
+      eve.say(id + messages.sample, status.id)        
       next
     end
   }
@@ -64,3 +69,4 @@ rescue => e
   puts e.message
   retry
 end
+

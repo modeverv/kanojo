@@ -8,15 +8,20 @@ class Notify
     @eve = eve
     @id = id
     @status_id = status_id
+
     parse
     dotask
 
   end
 
-  protected
+  def parsestr str
+    @command = str.split("com ").last.strip
+    puts @command    
+  end
   
   def parse 
-    @command = @commandstr.split(":").last.strip
+    @command = @commandstr.split("com ").last.strip
+    puts @command
   end
 
   def dotask
@@ -32,11 +37,9 @@ class Notify
               end
   end
 
-  private
-  
   def disk
-    ret = `df -h /dev/sdb1 /dev/sdc1`.split("\n")
-    result = ret[1..2].map {|row|
+    ret = `df -h /dev/mapper/ubuntu14--vg-root /dev/sdb1 /dev/sdc1`.split("\n")
+    result = ret[1..3].map {|row|
       elems = row.split(/\s+/)
       elems[0] +  " " + elems[3]
     }
@@ -60,9 +63,9 @@ SQL
 
   def help
     result =<<~EOF
-     com:anime tweet latest recorded animes.
-     com:disk show usage of disk.
-     com:help show help.
+     "com anime" tweet latest recorded animes.
+     "com disk" show usage of disk.
+     "com help" show help.
     EOF
     @eve.say(@id + result,@status_id)    
   end

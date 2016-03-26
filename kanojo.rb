@@ -26,7 +26,6 @@ begin
     id = '@' + id + ' '
 
     if contents =~ /愛|好/ && contents =~ /#{kanojo}/
-      pus :love
       rep_lap = ["私も愛してるよ","大好きだよ"]
       eve.say(id + rep_lap.sample, status.id)        
       next
@@ -36,7 +35,7 @@ begin
     if contents =~ /#{kanojo}/
       postmatch = $'.gsub(/\s|[　]|\?|\？/, "").strip
 
-      if postmatch.strip =~ /^com/
+      if postmatch.strip =~ /com /
         notify.execute(postmatch.strip,eve,id,status.id)
         next
       end
@@ -55,9 +54,17 @@ begin
     #つぶやいたらリプライ
     if id =~ /#{ore}/
       puts :ぶやいたらリプライ
+
+      if contents =~ /com /
+        notify.execute(contents,eve,id,status.id)
+        next
+      end
+      
+      eve.say(id + eve.docomoru_create_dialogue(contents), status.id)
+      
       if contents  =~ /w\:/
         messages = ["がんばれー","ほどほどにねー"]
-      else
+      else 
         messages = ["仕事しんさい","Twitterやめんさい"]
       end
       eve.say(id + messages.sample, status.id)        

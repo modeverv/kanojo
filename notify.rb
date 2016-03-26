@@ -1,3 +1,4 @@
+# coding: utf-8
 require "sqlite3"
 
 class Notify
@@ -32,6 +33,10 @@ class Notify
                 anime
               when @command =~ /help/
                 help
+              when @command =~ /clean/
+                animeclean
+              when @command =~ /gif/
+                animegif
               else
                 cantdo
               end
@@ -59,6 +64,16 @@ SQL
 
   def cantdo
     help
+  end
+
+  def animeclean
+    `/home/seijiro/crawler/cleanup.sh  >>/home/seijiro/crawler/log/cleanup.log 2>&1 &`
+    @eve.say(@id + "\n" + "きれいにするよー",@status_id)    
+  end
+  
+  def animegif
+    `/home/seijiro/crawler/gif.sh  >>/home/seijiro/crawler/log/gif.log 2>&1 &`
+    @eve.say(@id + "\n" + "きれいにするよー",@status_id)    
   end
 
   def help

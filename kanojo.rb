@@ -62,12 +62,12 @@ begin
       
       eve.say(id + eve.docomoru_create_dialogue(contents), status.id)
       
-      if contents  =~ /w\:/
-        messages = ["がんばれー","ほどほどにねー"]
-      else 
-        messages = ["仕事しんさい","Twitterやめんさい"]
-      end
-      eve.say(id + messages.sample, status.id)        
+      # if contents  =~ /w\:/
+      #   messages = ["がんばれー","ほどほどにねー"]
+      # else 
+      #   messages = ["仕事しんさい","Twitterやめんさい"]
+      # end
+      # eve.say(id + messages.sample, status.id)        
       next
     end
   }

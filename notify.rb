@@ -43,12 +43,12 @@ class Notify
   end
 
   def disk
-    ret = `df -h /dev/mapper/ubuntu14--vg-root /dev/sdb1 /dev/sdc1`.split("\n")
-    result = ret[1..3].map {|row|
+    ret = `df -h /dev/mapper/ubuntu14--vg-root /dev/sdb1 /dev/sdc1 /dev/sdd1`.split("\n")
+    result = ret[1..-1].map {|row|
       elems = row.split(/\s+/)
       elems[0] +  " " + elems[3]
     }
-    @eve.say(@id + "\n" + result.join("\n"),@status_id)
+    say("\n" + result.join("\n"))
   end
 
   def anime
@@ -68,21 +68,28 @@ SQL
 
   def animeclean
     `/home/seijiro/crawler/cleanup.sh  >>/home/seijiro/crawler/log/cleanup.log 2>&1 &`
-    @eve.say(@id + "\n" + "きれいにするよー",@status_id)    
+    say("\n" + "きれいにするよー")
   end
   
   def animegif
     `/home/seijiro/crawler/gif.sh  >>/home/seijiro/crawler/log/gif.log 2>&1 &`
-    @eve.say(@id + "\n" + "きれいにするよー",@status_id)    
+    say("\n" + "きれいにつくるよー")
   end
 
   def help
     result =<<~EOF
-     "com anime" tweet latest recorded animes.
-     "com disk" show usage of disk.
-     "com help" show help.
+    
+     "com anime" 
+     "com disk"  
+     "com clean" 
+     "com gif"   
+     "com help"  
     EOF
-    @eve.say(@id + result,@status_id)    
+    say(result)
+  end
+
+  def say result
+    @eve.say(@id + " " + result,@status_id)
   end
 
 end

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'yaml'
 require 'twitter'
 require 'tweetstream'
@@ -34,8 +35,10 @@ class Eve
 
   # 引数を投稿するメソッド
   def say words, id
+    puts :say
+    words = words + "\nunix:" + Time.now.to_i.to_s
     p words
-    @client.update(words, :in_reply_to_status_id => id)
+    p @client.update(words, :in_reply_to_status_id => id)
   end
 
   def array_say array, to, id
@@ -63,4 +66,5 @@ class Eve
       end
     end
   end
+  
 end

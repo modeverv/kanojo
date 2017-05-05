@@ -15,22 +15,23 @@ notify = Notify.new
 kanojo = "@bot_yome"
 ore = "@lovesaemi"
 
+
 # timelineの監視
 begin
   eve.timeline.userstream{|status|
     contents = status.text
 
     next if(contents=~/^RT/)
-    
+
     id = status.user.screen_name
     id = '@' + id + ' '
 
     if contents =~ /愛|好/ && contents =~ /#{kanojo}/
       rep_lap = ["私も愛してるよ","大好きだよ"]
-      eve.say(id + rep_lap.sample, status.id)        
+      eve.say(id + rep_lap.sample, status.id)
       next
-    end     
-    
+    end
+
     # reply_answer
     if contents =~ /#{kanojo}/
       postmatch = $'.gsub(/\s|[　]|\?|\？/, "").strip
@@ -39,7 +40,7 @@ begin
         notify.execute(postmatch.strip,eve,id,status.id)
         next
       end
-      
+
       # QandA
       if(postmatch =~ /誰|何処|だれ|どこ|何時|いつ|どうやって|どうして|何故|なぜ|どの|何|なに|どれ|は$/)
         eve.say(id + eve.docomoru_create_knowledge(postmatch), status.id)
@@ -47,7 +48,7 @@ begin
       else
         eve.say(id + eve.docomoru_create_dialogue(postmatch), status.id)
       end
-      
+
       next
     end
 
@@ -59,15 +60,15 @@ begin
         notify.execute(contents,eve,id,status.id)
         next
       end
-      
+
       eve.say(id + eve.docomoru_create_dialogue(contents), status.id)
-      
+
       # if contents  =~ /w\:/
       #   messages = ["がんばれー","ほどほどにねー"]
-      # else 
+      # else
       #   messages = ["仕事しんさい","Twitterやめんさい"]
       # end
-      # eve.say(id + messages.sample, status.id)        
+      # eve.say(id + messages.sample, status.id)
       next
     end
   }
@@ -76,4 +77,3 @@ rescue => e
   puts e.message
   retry
 end
-

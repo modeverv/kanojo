@@ -42,7 +42,7 @@ begin
       end
 
       # QandA
-      if(postmatch =~ /誰|何処|だれ|どこ|何時|いつ|どうやって|どうして|何故|なぜ|どの|何|なに|どれ|は$/)
+      if(postmatch =~ /誰|何処|だれ|どこ|何時|いつ|どうやって|どうして|何故|なぜ|どの|何|なに|どれ|は|?|？$/)
         eve.say(id + eve.docomoru_create_knowledge(postmatch), status.id)
       # 会話
       else
@@ -52,7 +52,7 @@ begin
       next
     end
 
-    #つぶやいたらリプライ
+    #リプきたらリプライ
     if id =~ /#{ore}/
       puts :ぶやいたらリプライ
 

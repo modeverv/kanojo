@@ -66,5 +66,4 @@ class Eve
       end
     end
   end
-  
 end
